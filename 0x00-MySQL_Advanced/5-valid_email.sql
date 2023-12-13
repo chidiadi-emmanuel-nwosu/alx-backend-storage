@@ -6,7 +6,7 @@ AFTER UPDATE ON user
 FOR EACH ROW
     BEGIN
         IF OLD.email <> NEW.email
-            SET quantity = quantity - NEW.number;
+            SET valid_email = 0;
         END IF
     END //
 DELIMITER ;
