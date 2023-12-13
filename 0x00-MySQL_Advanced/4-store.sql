@@ -1,6 +1,6 @@
 -- creates a trigger that decreases the quantity
 -- of an item after adding a new order.
-DELIMETER //
+DELIMITER //
 CREATE TRIGGER decrease_item_quantity
 AFTER INSERT ON orders
 FOR EACH ROW
@@ -9,4 +9,4 @@ FOR EACH ROW
         SET quantity = quantity - NEW.number
         WHERE name = NEW.item_name;
     END //
-DELIMETER ;
+DELIMITER ;
