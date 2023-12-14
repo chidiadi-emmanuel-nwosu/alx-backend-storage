@@ -1,7 +1,7 @@
--- script that creates a stored procedure ComputeAverageWeightedScoreForUser
+-- script that creates a stored procedure ComputeAverageWeightedScoreForUsers
 -- that computes and store the average weighted score for all student.
 DELIMITER //
-CREATE PROCEDURE ComputeAverageWeightedScoreForUser(IN in_user_id INT)
+CREATE PROCEDURE ComputeAverageWeightedScoreForUsers()
 BEGIN
     DECLARE done INT DEFAULT FALSE;
     DECLARE in_user_id INT;
