@@ -14,6 +14,6 @@ def list_all(mongo_collection):
     - A list of documents from the MongoDB collection.
       If the collection is empty, an empty list is returned.
     """
-    if not mongo_collection.count_documents():
+    if not mongo_collection.count_documents({}):
         return []
     return mongo_collection.find()
