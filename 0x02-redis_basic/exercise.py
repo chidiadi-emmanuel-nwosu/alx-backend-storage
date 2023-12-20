@@ -15,6 +15,7 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
     """ decorator """
     @wraps(method)
@@ -27,6 +28,7 @@ def call_history(method: Callable) -> Callable:
         self._redis.rpush(_output, str(output))
         return output
     return wrapper
+
 
 def replay(fn: Callable):
     """ replay """
@@ -43,6 +45,7 @@ def replay(fn: Callable):
         input = input.decode('utf-8')
         output = output.decode('utf-8')
         print(f"{name}(*{input}) -> {output}")
+
 
 class Cache:
     """
