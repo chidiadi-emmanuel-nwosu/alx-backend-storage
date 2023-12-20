@@ -40,6 +40,8 @@ def replay(fn: Callable):
     outputs = r.lrange(f"{name}:outputs", 0, -1)
 
     for input, output in zip(inputs, outputs):
+        input = input.decode('utf-8')
+        output = output.decode('utf-8')
         print(f"{name}(*{input}) -> {output}")
 
 class Cache:
