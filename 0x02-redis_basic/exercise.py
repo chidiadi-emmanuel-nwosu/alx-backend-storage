@@ -75,7 +75,8 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[bytes, str, int]:
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[bytes, str, int]:
         """
         Retrieves the value associated with the given key from the cache.
 
