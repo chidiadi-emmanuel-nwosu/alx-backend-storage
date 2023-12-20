@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ exercise.py """
-from typing import Union
+from typing import Union, Callable, Optional
 import uuid
 import redis
 
@@ -30,3 +30,56 @@ class Cache:
         key: str = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None) -> Union[bytes, str, int]:
+        """
+        Retrieves the value associated with the given key from the cache.
+
+        Args:
+        - key: A string representing the key to retrieve
+               the value from the cache.
+        - fn: An optional callable function to convert the retrieved value.
+              Defaults to None if no conversion needed.
+
+        Returns:
+        - Union[bytes, str, int]: The retrieved value from the cache.
+                                 If a conversion function is provided,
+                                 it returns the converted value.
+        """
+        value = self._redis.get(key)
+
+        if not value:
+            return value
+
+        if fn:
+            value = fn(value)
+
+        return value
+
+    def get_str(self, key: str) -> str:
+        """
+        Retrieves the value associated with the given key from the cache
+        and returns it as a string.
+
+        Args:
+        - key: A string representing the key to retrieve the
+               value from the cache.
+
+        Returns:
+        - Union[bytes, str]: The retrieved value from the cache as a string.
+        """
+        return self.get(key, lambda x: x.decode('utf-8'))
+
+    def get_int(self, key: str) -> int:
+        """
+        Retrieves the value associated with the given key from the cache
+        and returns it as a string.
+
+        Args:
+        - key: A string representing the key to retrieve
+               the value from the cache.
+
+        Returns:
+        - Union[bytes, str]: The retrieved value from the cache as an int.
+        """
+        return self.get(key, lambda x: int(x.decode('utf-8')))
