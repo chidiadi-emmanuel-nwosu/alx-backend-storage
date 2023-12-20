@@ -28,6 +28,20 @@ def call_history(method: Callable) -> Callable:
         return output
     return wrapper
 
+def replay(fn: Callable):
+    """ replay """
+    name = fn.__qualname__
+    r = redis.Redis()
+    nb_calls = r.get(name).decode('utf-8')
+
+    print(f"{name} was called {nb_calls} times:")
+
+    inputs = r.lrange(f"{name}:inputs", 0, -1)
+    outputs = r.lrange(f"{name}:outputs", 0, -1)
+
+    for input, output in zip(inputs, outputs):
+        print(f"{name}(*{input}) -> {output}")
+
 class Cache:
     """
     Cache class to store data using Redis
